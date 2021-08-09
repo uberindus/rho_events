@@ -1,0 +1,377 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  min-width: 1250px;
+  font-family: "Roboto", sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+.navbar-head {
+  background: #f8f5f0;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  justify-content: center;
+}
+.navbar-head img {
+  max-height: 150px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.auth-block {
+  min-width: 500px;
+  display: grid;
+  grid-template-columns: 25% 25%;
+  font-weight: bold;
+  font-size: 1.3em;
+  justify-content: center;
+}
+
+.edit-user {
+  padding-bottom: 400px;
+}
+
+.edit-user > div:nth-child(n + 2) {
+  /* padding-bottom: 100px; */
+  margin-top: 25px;
+  border-top: 1px solid gainsboro;
+}
+
+.personal-data-header {
+  width: 100%;
+  padding: 10px 0px 10px 0;
+  /* background-color: #F8F5F0; */
+  /* border-radius: 10px; */
+  /* border-color: black; */
+}
+
+.avatar-zone {
+  background-color: #f8f5f0;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.avatar {
+  max-width: 320px;
+}
+.avatar > img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+.avatar-submit-button {
+  margin-top: 3px;
+  width: 93%;
+}
+
+.auth-block > div {
+  margin: auto;
+}
+.auth-block > div > a {
+  text-decoration: none;
+  color: #1c384b;
+}
+.auth-block > div > a:hover {
+  text-decoration: none;
+  color: #df5d43;
+}
+
+.base-background-colour {
+  background-color: #1c384b;
+  border-color: #1c384b;
+}
+.base-background-colour:hover {
+  border-color: #df5d43;
+  background-color: #df5d43;
+}
+
+.edit-event-basic-info {
+  margin-bottom: 40px;
+}
+
+.add-event-link {
+  margin: 0px 0 20px 0px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #cdcdcd;
+  display: grid;
+  grid-template-columns: 400px;
+  grid-gap: 20px;
+  font-size: 17px;
+  justify-content: center;
+}
+.add-event-link > a {
+  text-decoration: none;
+}
+
+.add-event-button {
+  display: block;
+  background-color: #1c384b;
+  color: white;
+  padding: 3px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.cabinet-links {
+  margin: 20px 0 20px 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid #cdcdcd;
+  border-bottom: 1px solid #cdcdcd;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 30%);
+  grid-gap: 20px;
+  font-size: 17px;
+  justify-content: center;
+}
+
+.cabinet-links > a {
+  text-decoration: none;
+}
+
+.cabinet-menu-button {
+  display: block;
+  background-color: #1c384b;
+  color: white;
+  padding: 3px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.navbar-menu {
+  margin: 30px 0 30px 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 230px);
+  grid-gap: 20px;
+  font-size: 20px;
+}
+.navbar-menu > a {
+  text-decoration: none;
+}
+.navbar-menu-button {
+  display: block;
+  background-color: #1c384b;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+.user-items-list {
+  margin: 10px 0 7px 0;
+}
+
+.user-items-list > * {
+  margin-right: 10px;
+}
+.user-item {
+  border: 1px solid #cdcdcd;
+  border-radius: 10px;
+  background: transparent;
+  display: inline-block;
+  padding: 5px 16px 5px 16px;
+  margin-top: 3px;
+}
+.user-item > span {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.muted-button {
+  background: transparent;
+  border: transparent;
+}
+
+.muted-button:hover,
+.muted-button:focus,
+.muted-button:active {
+  background: transparent;
+}
+
+.main {
+  padding: 50px;
+  background-color: #f8f5f0;
+  margin: 0px 40px 50px 40px;
+  height: 100%;
+  border-radius: 15px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 80%;
+  grid-template-rows: 90%;
+}
+
+.content {
+  /* margin: 50px; */
+  padding: 20px;
+  padding-bottom: 40px;
+  /* margin-bottom: 90px; */
+  /* padding-bottom: 200px; */
+  max-height: 200%;
+  border-radius: 10px;
+  height: 100%;
+  background-color: white;
+}
+
+.edit-delete-buttons {
+}
+.status-change-buttons {
+  margin-top: 6px;
+}
+.status-change-buttons > button {
+  text-align: center;
+  margin-right: 6px;
+  background-color: #1c384b;
+  border-color: #1c384b;
+}
+
+.status-change-buttons > button:hover {
+  text-align: center;
+  margin-right: 6px;
+  border-color: #df5d43;
+  background-color: #df5d43;
+}
+
+.edit-delete-buttons > button {
+  text-align: center;
+  margin-right: 6px;
+  background-color: #1c384b;
+  border-color: #1c384b;
+}
+
+.edit-delete-buttons > button:hover {
+  text-align: center;
+  margin-right: 6px;
+  border-color: #df5d43;
+  background-color: #df5d43;
+}
+
+.affiliation-to-user {
+  margin-bottom: 20px;
+  border-bottom: 1px solid gainsboro;
+  padding-bottom: 10px;
+}
+.eventOrganization-to-event {
+  margin-bottom: 20px;
+  border-bottom: 1px solid gainsboro;
+  padding-bottom: 10px;
+}
+
+.add-affiliation-to-user {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+.check-is_main_affiliation > * {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.check-is_main_affiliation {
+  margin-bottom: 3px;
+}
+
+.public-events-list {
+  display: grid;
+  grid-template-columns: 45% 45%;
+  justify-content: center;
+  grid-gap: 30px;
+  padding: 0 10px 150px 10px;
+  margin-top: 30px;
+}
+
+.piblic-event-dates {
+  margin: 15px 0 26px 5px;
+}
+
+.public-event-place {
+  margin: 20px 0 20px 0;
+}
+.piblic-event-dates > span {
+  display: inline-block;
+  margin-right: 30px;
+  font-size: 19px;
+  font-style: italic;
+}
+
+.public-event-full-description {
+  white-space: pre-wrap;
+}
+.public-event {
+  padding-bottom: 150px;
+}
+.events-list-item > h5 > a {
+  text-decoration: none;
+}
+
+.public-events-list > div {
+  border: 1px solid gainsboro;
+  border-radius: 30px;
+  padding: 10px;
+}
+
+.events-list-item-dates > span {
+  margin-right: 8px;
+}
+.events-list-item-dates {
+  margin-bottom: 8px;
+}
+.datePicker {
+  display: inline-block;
+  margin: 10px;
+}
+
+.add-event {
+  padding-bottom: 80px;
+}
+.edit-event {
+  padding-bottom: 400px;
+}
+.edit-event > div:nth-child(n + 2) {
+  /* padding-bottom: 100px; */
+  margin-top: 25px;
+  border-top: 1px solid gainsboro;
+}
+
+.role-radio > * {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.role-radio > label > span {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 12% 10% 20% 10% 15% 20%;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filters > * {
+  display: inline-block;
+  text-align: center;
+}
+
+.content-header {
+  border-bottom: 1px solid gainsboro;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.users-list {
+  display: grid;
+  justify-content: center;
+}
+
+.users-list-item > a {
+  display: inline-block;
+}
+.users-list-item > a > span {
+  display: inline-block;
+  margin-right: 20px;
+  text-decoration: none;
+}

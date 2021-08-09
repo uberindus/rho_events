@@ -1,0 +1,53 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend/django_app/:/usr/src/app/
+    ports:
+      - 8000:8000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=secret
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_DATABASE=RHO_DB_dev
+      - DB_USER=postgres_user
+      - DB_PASSWORD=postgres_password
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
+  db:
+    image: postgres:13.3-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_DB=RHO_DB_dev
+    ports:
+      - 4000:5432
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    command: npm start
+    volumes:
+      - ./frontend/react_app/:/app/
+    ports:
+      - 3000:3000
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - 80:80
+
+volumes:
+  postgres_data:

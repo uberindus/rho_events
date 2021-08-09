@@ -1,0 +1,1 @@
+docker-compose -f ../docker-compose.dev.yml exec backend sh -c "python manage.py shell"

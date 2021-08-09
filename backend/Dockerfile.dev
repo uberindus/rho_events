@@ -1,0 +1,29 @@
+# pull official base image
+FROM python:3.8.5-alpine
+
+ENV APP_HOME /usr/src/app
+
+# set work directory
+WORKDIR $APP_HOME
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
+
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./django_app/requirements.txt .
+RUN pip install -r requirements.txt
+
+# copy entrypoint.dev.sh
+COPY ./entrypoint.dev.sh /
+
+# copy project
+COPY ./django_app .
+
+# run entrypoint.dev.sh
+ENTRYPOINT ["/entrypoint.dev.sh"]
