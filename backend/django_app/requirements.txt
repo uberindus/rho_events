@@ -1,4 +1,5 @@
 asgiref==3.4.1
+autopep8==1.5.7
 certifi==2021.5.30
 cffi==1.14.6
 charset-normalizer==2.0.2
@@ -7,6 +8,8 @@ coreschema==0.0.4
 cryptography==3.4.7
 defusedxml==0.7.1
 Django==3.2.5
+django-cors-headers==3.7.0
+django-filter==2.4.0
 django-phonenumber-field==5.2.0
 django-templated-mail==1.1.1
 djangorestframework==3.12.4
@@ -22,6 +25,7 @@ oauthlib==3.1.1
 phonenumbers==8.12.27
 Pillow==8.3.1
 psycopg2-binary==2.8.5
+pycodestyle==2.7.0
 pycparser==2.20
 PyJWT==2.1.0
 python3-openid==3.2.0
@@ -32,5 +36,6 @@ six==1.16.0
 social-auth-app-django==4.0.0
 social-auth-core==4.1.0
 sqlparse==0.4.1
+toml==0.10.2
 uritemplate==3.0.1
 urllib3==1.26.6

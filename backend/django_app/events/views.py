@@ -11,6 +11,7 @@ from events.services import EventService, EventOrganizationService,\
     UserStatusChangedRecordService, EventStatusChangedRecordService
 from django.contrib.contenttypes.models import ContentType
 from djoser.views import UserViewSet as DjoserViewSet
+import datetime
 
 
 class AvatarDetail(generics.RetrieveUpdateAPIView):
@@ -43,8 +44,8 @@ class EventViewSet(viewsets.ModelViewSet):
         queryset = EventService(self.request.user).filter_permitted()
         user_id = self.request.query_params.get('user')
         user_role = self.request.query_params.get('user_role')
-        # FIXME
-        # bad practice?
+        is_over = self.request.query_params.get('is_over')
+
         if user_id is not None:
             if user_role == "ORGANIZER":
                 queryset &= Event.objects.filter_by_organizer(user=user_id)
@@ -53,6 +54,9 @@ class EventViewSet(viewsets.ModelViewSet):
             else:
                 queryset &= Event.objects.filter_by_organizer(
                     user=user_id) | Event.objects.filter_by_reporter(user=user_id)
+
+        if is_over == "false":
+            queryset = queryset.filter(date_end__gte=datetime.date.today())
         return queryset.distinct()
 
     def perform_destroy(self, instance):

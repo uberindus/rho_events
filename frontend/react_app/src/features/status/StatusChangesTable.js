@@ -19,7 +19,7 @@ const StatusChangesTableRow = ({statusChange}) => {
                 <td>{StatusCodeConstants[statusChange.current_status]}</td>
                 <td><DateTime ISOtimestamp={statusChange.timestamp}/></td>
                 <td className="col-md-3">
-                    {`${causer.last_name} ${causer.first_name} ${causer.patdonymic}`}
+                    {`${causer.last_name} ${causer.first_name} ${causer.patronymic}`}
                 </td>
                 <td className="col-md-4">{statusChange.comment}</td>
             </tr>

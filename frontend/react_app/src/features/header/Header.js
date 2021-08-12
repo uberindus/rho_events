@@ -46,7 +46,7 @@ export const Header = () => {
                   </div>
             </div>
             <div className="navbar-menu">
-                <Link to="/public-events">
+                <Link to="/">
                   <span className="navbar-menu-button base-background-colour">Мероприятия</span>
                   </Link>
                 <Link to={isLoggedIn ? "/cabinet" : "/login"}>

@@ -9,7 +9,7 @@ import { EventList } from "./EventList";
 import { PublicEventsListItem } from "./PublicEventsListItem"
 
 export const PublicEventsList = () => {
-    const { data: events, isFetching, isSuccess, error } = useGetEventsQuery({status: "APPROVED"})
+    const { data: events, isFetching, isSuccess, error } = useGetEventsQuery({status: "APPROVED", is_over: "false"})
 
     const status = useSelector(state => state.auth.status)
 

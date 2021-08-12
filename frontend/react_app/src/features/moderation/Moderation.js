@@ -29,9 +29,6 @@ export const Moderation = () => {
                 <Route path={`${match.path}/users`}>
                     <UserList/>
                 </Route>
-                {/* <Route path={`${match.path}/security`}>
-                    <MySecurity />
-                </Route> */}
             </Switch>
         </React.Fragment>
     )

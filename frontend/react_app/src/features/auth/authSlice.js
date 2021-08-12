@@ -6,6 +6,7 @@ import {
 
 import { client } from '../../api/client'
 import { auth_tokenKey, myIdKey } from "../../constants" 
+import { getMyId } from '../../utils';
 
 export const signUp = createAsyncThunk('auth/signUp', async (userInfo, { rejectWithValue }) => {
     const res = await client.post('api/users/', userInfo);
@@ -18,6 +19,7 @@ export const signUp = createAsyncThunk('auth/signUp', async (userInfo, { rejectW
     }   
 })
 
+
 export const logout = createAsyncThunk('auth/logout', async () => {
     try{
         await client.post('api/token/logout');
@@ -28,6 +30,19 @@ export const logout = createAsyncThunk('auth/logout', async () => {
     finally{
         localStorage.clear()
     }
+})
+
+export const refreshStatus = createAsyncThunk('auth/refreshStatus', async (_, { rejectWithValue }) => {
+    const myId = getMyId() 
+    const res = await client.get(`api/users/${myId}/`);
+    if (res.ok){
+        const user = await res.json()
+        return {status: user.status}
+    }
+    else {
+        const errors = await res.json()
+        return Promise.reject(rejectWithValue(errors))
+    }   
 })
 
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
@@ -55,6 +70,7 @@ const authSlice = createSlice({
         isLoggedIn: localStorage.getItem("myId") && localStorage.getItem("auth_token") ?  true : false,
         is_moderator :  localStorage.getItem("is_moderator") === 'true' ? true : false,
         status : localStorage.getItem("status"),
+        isStatusRefreshed: false,
     },
     reducers: {},
     extraReducers: {
@@ -72,6 +88,10 @@ const authSlice = createSlice({
             const is_moderator = action.payload.is_moderator === "True" ? true : false
             state.is_moderator = is_moderator
         },
+        [refreshStatus.fulfilled]: (state, action) => {
+            state.status = action.payload.status
+            state.isStatusRefreshed = true
+        }
     }
     
 })

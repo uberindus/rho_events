@@ -1,5 +1,8 @@
 import { auth_tokenKey, myIdKey } from "../constants" 
 
+const API_URL = process.env.NODE_ENV === "production" ? "" : "http://localhost:8000"
+
+
 export async function client(endpoint, {body, ...customConfig} = {}) {
 
     const token = window.localStorage.getItem(auth_tokenKey)
@@ -19,7 +22,7 @@ export async function client(endpoint, {body, ...customConfig} = {}) {
       config.body = JSON.stringify(body)
     }
     return window
-      .fetch(`${process.env.REACT_APP_API_URL}/${endpoint}`, config)
+      .fetch(`${API_URL}/${endpoint}`, config)
       .then(async response => {
         if (response.status === 401) {
           window.localStorage.removeItem(auth_tokenKey)

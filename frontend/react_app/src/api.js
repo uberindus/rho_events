@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getMyId, getAuthToken} from "./utils";
 
+
+const API_URL = process.env.NODE_ENV === "production" ? "" : "http://localhost:8000"
+
+
 function providesTagsForList(result, type){
   return result
   ? // successful query
@@ -72,7 +76,7 @@ function buildRequestSet(build, tagType, baseEndpoint){
 
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_API_URL}/api/`, prepareHeaders}),
+  baseQuery: fetchBaseQuery({ baseUrl: `${API_URL}/api/`, prepareHeaders}),
   tagTypes: ['Users', "Avatars", "RegionalBranches, ProffInterestsUsers, ProffInterests"],
   endpoints: (build) => ({
     ...buildRequestSet(build, "Users", "users/"),

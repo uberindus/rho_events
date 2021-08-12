@@ -45,6 +45,38 @@ if DEBUG:
     ALLOWED_HOSTS = ['*']
     CORS_ORIGIN_ALLOW_ALL = True
 
+
+if not DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '\n%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s'
+            }
+        },
+        'handlers': {
+            'file': {
+                'level': 'WARNING',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'formatter': 'verbose',
+                'filename': BASE_DIR / Path("logs/errors.log"),
+                'backupCount': 1,
+                'maxBytes': 1024 * 1024 * 100,  # 100 mb
+            },
+            'mail_admins': {
+                'level': 'ERROR',
+                'class': 'django.utils.log.AdminEmailHandler'
+            },
+        },
+        'loggers': {
+            'django': {
+                'level': 'WARNING',
+                'handlers': ['file', "mail_admins"],
+            },
+        }
+    }
+
 ROOT_URLCONF = 'django_app.urls'
 
 AUTH_USER_MODEL = 'events.User'

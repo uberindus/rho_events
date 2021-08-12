@@ -57,8 +57,8 @@ export const EventBasicInfoForm = ({event}) => {
     },
     initialValues:{
         title: event.title,
-        date_begin: Date(event.date_begin),
-        date_end: Date(event.date_end),
+        date_begin: new Date(event.date_begin),
+        date_end: new Date(event.date_end),
         place: event.place,
         brief_description: event.brief_description,
         full_description: event.full_description,

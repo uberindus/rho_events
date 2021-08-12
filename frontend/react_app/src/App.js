@@ -20,16 +20,11 @@ import {useGetRegionalBranchesQuery,
 import { createBrowserHistory } from 'history';
 import { Moderation } from './features/moderation/Moderation';
 import { UserEditPage } from './features/users/UserEditPage';
-import { selectIsModerator } from './features/auth/authSlice';
-import { useSelector } from 'react-redux';
+import { refreshStatus, selectIsLoggedIn, selectIsModerator } from './features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { PublicEventPage } from './features/events/PublicEventPage';
 
 const history = createBrowserHistory();
-
-function Empty() {
-  return <div></div>
-}
-
 
 function App() {
 
@@ -38,6 +33,14 @@ function App() {
   useGetOrganizationsQuery()
   useGetAcademicTitlesQuery()
 
+  const dispatch = useDispatch()
+  const isLoggedIn = useSelector(state => selectIsLoggedIn(state))
+  const isStatusRefreshed = useSelector(state => state.auth.isStatusRefreshed)
+
+  if (isLoggedIn && !isStatusRefreshed){
+    dispatch(refreshStatus()).unwrap().catch(err => console.error("Refreshing of status failed"))
+  }
+
   const is_moderator = useSelector(state => selectIsModerator(state))
   return (
     <Router history={history}>
@@ -45,13 +48,12 @@ function App() {
       <div className="main">
         <div className="content">
           <Switch>
-            <Route exact path="/"  component={Empty}/>
             <Route path="/signup" component={SignUp}/>
             <Route path="/login" component={Login}/>
             <Route path="/cabinet" component={Cabinet} />
             <Route path="/add-event" component={AddEvent} />
             <Route path="/edit-event/:id" component={EventEdit} />
-            <Route exact path="/public-events" component={PublicEventsList} />
+            <Route exact path="/" component={PublicEventsList} />
             <Route path="/public-events/:id" component={PublicEventPage} />
             {is_moderator ?
               <React.Fragment>
