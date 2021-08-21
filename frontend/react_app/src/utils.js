@@ -43,3 +43,19 @@ export function dateToDMY(date) {
     const y = transformedDate.getFullYear();
     return '' + (d <= 9 ? '0' + d : d) + '-' + (m<=9 ? '0' + m : m) + '-' +  y ;
 }
+
+
+export function translateErrors(errors, translation_dictionary){
+    let field_errors;
+    const traslated_errors = {}
+    for (let field in errors){
+      if (field in translation_dictionary){  
+        const field_errors = errors[field]
+        const translated_field_errors = field_errors.map(message => 
+          translation_dictionary[field].get(message)
+        )
+        traslated_errors[field] = translated_field_errors
+      }
+    }
+    return traslated_errors
+  }

@@ -125,6 +125,15 @@ export const api = createApi({
       },
       invalidatesTags: (result, error, { id }) => [{ type: "Avatars", id }],
     }),
+    "setPassword": build.mutation({
+      query(body) {
+        return ({
+          url: '/users/set_password/',
+          method: 'POST',
+          body
+        })
+      }
+    })
   }),
 })
 
@@ -172,4 +181,5 @@ export const {
   useUpdateEventMutation,
   useDeleteEventMutation,
 
+  useSetPasswordMutation,
 } = api

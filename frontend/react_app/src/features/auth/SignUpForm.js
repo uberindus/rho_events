@@ -16,8 +16,11 @@ import { ErrorMessage } from "../general/ErrorMessage";
 
 import { useGetRegionalBranchesQuery } from "../../api";
 
+import { translateErrors } from "../../utils"
+
 const password_errors_translation = new Map()
 password_errors_translation.set("The password is too similar to the email address.", "Пароль слишком похож на электронную почту")
+password_errors_translation.set("The password is too similar to the first name.", "Пароль слишком похож на имя")
 
 const email_errors_translation = new Map()
 email_errors_translation.set('user with this email address already exists.', "Пользователь с таким электронным адресом уже существует")
@@ -25,21 +28,6 @@ email_errors_translation.set('user with this email address already exists.', "П
 const translation_dictionary = {
   email: email_errors_translation,
   password: password_errors_translation
-}
-
-function translateErrors(errors){
-  let field_errors;
-  const traslated_errors = {}
-  for (let field in errors){
-    if (field in translation_dictionary){  
-      const field_errors = errors[field]
-      const translated_field_errors = field_errors.map(message => 
-        translation_dictionary[field].get(message)
-      )
-      traslated_errors[field] = translated_field_errors
-    }
-  }
-  return traslated_errors
 }
 
 // необходимо добавить дргуие поля в translted
@@ -123,7 +111,7 @@ const SignUpForm = () => {
           }
           catch (err) {
             console.error("Signup failed", err);
-            const translated_errors = translateErrors(err)
+            const translated_errors = translateErrors(err, translation_dictionary)
             setSignUpErrors(translated_errors)
             setIsSignUpFailed(true)
           }
@@ -177,7 +165,7 @@ const SignUpForm = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} md="4" controlId="validationFormik02">
-                  <Form.Label>Пароль</Form.Label>
+                  <Form.Label>Подтверждение пароля</Form.Label>
                   <Form.Control
                     type="password"
                     name="re_password"

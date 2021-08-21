@@ -8,6 +8,7 @@ import {
 import { UserEdit } from "../users/UserEdit";
 import { getMyId } from "../../utils"
 import { MyEvents } from './MyEvents';
+import { MySecurity } from './MySecurity';
 
 export const Cabinet = () => {
     let match = useRouteMatch();
@@ -21,7 +22,7 @@ export const Cabinet = () => {
                 <Link to={`${match.path}/my-events`}>
                   <span className="cabinet-menu-button base-background-colour">Мои мероприятия</span>
                 </Link>
-                <Link to={`${match.path}/my-events`}>
+                <Link to={`${match.path}/security`}>
                   <span className="cabinet-menu-button base-background-colour">Настройки безопасности</span>
                 </Link>
             </div>
@@ -33,9 +34,9 @@ export const Cabinet = () => {
                 <Route path={`${match.path}/my-events`}>
                     <MyEvents />
                 </Route>
-                {/* <Route path={`${match.path}/security`}>
+                <Route path={`${match.path}/security`}>
                     <MySecurity />
-                </Route> */}
+                </Route>
             </Switch>
         </React.Fragment>
     )
