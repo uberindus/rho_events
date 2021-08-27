@@ -20,7 +20,7 @@ class IsAuthenticated(permissions.IsAuthenticated):
 
 
 class IsApprovedUser(permissions.IsAuthenticated):
-    message = 'This action is permitted for APPROVED users' 
+    message = 'This action is permitted for APPROVED users'
 
     def has_permission(self, request, view):
         return super().has_permission(request, view) and \
@@ -35,7 +35,7 @@ class IsModerator(permissions.IsAuthenticated):
 
     def has_permission(self, request, view):
         return super().has_permission(request, view) and request.user.is_moderator
-    
+
     def has_object_permission(self, request, view, obj):
         return self.has_permission(request, view)
 
@@ -43,7 +43,7 @@ class IsModerator(permissions.IsAuthenticated):
 # can use instead isUserRelated
 class IsAvatarOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return obj.user == request.user        
+        return obj.user == request.user
 
 
 class IsEventOrganizer(permissions.BasePermission):
@@ -57,14 +57,14 @@ class IsRelatedEventOrganizer(permissions.BasePermission):
     message = 'This action is permitted only for  Event organizer'
 
     def has_permission(self, request, view):
-        if request.method is "post":
+        if request.method == "post":
             event = request.data.get("event", None)
             if event:
                 return request.user.is_event_organizer(event)
             else:
                 raise exceptions.ValidationError("event must be specified")
         return True
-        
+
     def has_object_permission(self, request, view, obj):
         event = obj.event
         return request.user.is_event_organizer(event)
@@ -108,50 +108,51 @@ class IsEventParticipationOwnerOrRelatedEventOrganizer(permissions.BasePermissio
 
     def has_permission(self, request, view):
         return IsEventParticipationOwner().has_permission(request, view) or\
-             IsRelatedEventOrganizer().has_permission(request, view)
+            IsRelatedEventOrganizer().has_permission(request, view)
 
     def has_object_permission(self, request, view, obj):
         return IsEventParticipationOwner().has_object_permission(request, view, obj) or\
-             IsRelatedEventOrganizer().has_object_permission(request, view, obj)
+            IsRelatedEventOrganizer().has_object_permission(request, view, obj)
 
 
 class IsCurrentUser(permissions.IsAuthenticated):
-    message = "This action is permitted only for current user" 
+    message = "This action is permitted only for current user"
 
     def has_object_permission(self, request, view, obj):
         return obj.pk == request.user.pk
 
 
 class IsCurrentUserOrModerator(permissions.BasePermission):
-    message = "This action is permitted only for current user or moderator" 
-    
+    message = "This action is permitted only for current user or moderator"
+
     def has_permission(self, request, view):
         return IsCurrentUser().has_permission(request, view) or\
-             IsModerator().has_permission(request, view)
+            IsModerator().has_permission(request, view)
 
     def has_object_permission(self, request, view, obj):
         return IsCurrentUser().has_object_permission(request, view, obj) or\
-             IsModerator().has_object_permission(request, view, obj)
+            IsModerator().has_object_permission(request, view, obj)
+
 
 class IsCurrentUserOrApproved(permissions.BasePermission):
-    message = "This action is permitted only for current or approved user" 
-    
+    message = "This action is permitted only for current or approved user"
+
     def has_permission(self, request, view):
         return IsCurrentUser().has_permission(request, view) or\
-             IsApprovedUser().has_permission(request, view)
+            IsApprovedUser().has_permission(request, view)
 
     def has_object_permission(self, request, view, obj):
         return IsCurrentUser().has_object_permission(request, view, obj) or\
-             IsApprovedUser().has_object_permission(request, view, obj)
+            IsApprovedUser().has_object_permission(request, view, obj)
 
 
 class IsCurrentUserOrAuthenticated(permissions.BasePermission):
-    message = "This action is permitted only for current or authenticated user" 
-    
+    message = "This action is permitted only for current or authenticated user"
+
     def has_permission(self, request, view):
         return IsCurrentUser().has_permission(request, view) or\
-             IsAuthenticated().has_permission(request, view)
+            IsAuthenticated().has_permission(request, view)
 
     def has_object_permission(self, request, view, obj):
         return IsCurrentUser().has_object_permission(request, view, obj) or\
-             IsAuthenticated().has_object_permission(request, view, obj)
+            IsAuthenticated().has_object_permission(request, view, obj)
