@@ -65,7 +65,7 @@ export const UserBasicInfoForm = ({user}) => {
     regional_branch: yup.string()
       .required("Региональный отделение обязателено"),
     academic_rank: yup.string()
-      .required("Академическое звание обязателено"),
+      .required("Ученое звание обязателено"),
   });
 
 
@@ -160,7 +160,7 @@ export const UserBasicInfoForm = ({user}) => {
     </Form.Group>
     <Row>
       <Form.Group as={Col} md="6" controlId="validationFormik02">
-        <Form.Label>Академическое звание</Form.Label>
+        <Form.Label>Ученое звание</Form.Label>
         <Form.Select
           className="me-sm-2"
           name="academic_rank"

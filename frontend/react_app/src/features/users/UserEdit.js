@@ -40,7 +40,7 @@ export const UserEdit = ({userId}) => {
                         <AffiliationsToUser userId={userId}/>
                     </div>
                     <div>
-                        <h3 className="personal-data-header">Статус аккаунта</h3>
+                        <h3 className="personal-data-header">Статус</h3>
                         {/* вот здесь уже можно разместить историю изменения статусов с помощью таблицы */}
                         <StatusChangesTable
                             objectId={userId}

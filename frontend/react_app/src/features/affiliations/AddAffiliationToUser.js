@@ -163,7 +163,7 @@ export const AddAffiliationToUser = ({userId, organizations}) => {
             </Form.Group>
           }
           <Form.Group as={Col} md="7" className="mb-2" controlId="validationFormik00">
-            <Form.Label>Позиция</Form.Label>
+            <Form.Label>Должность</Form.Label>
             <Form.Control md="5"
               type="text"
               name="position"

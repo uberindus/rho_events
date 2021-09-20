@@ -23,7 +23,7 @@ export const AcademicTitlesToUser = ({userId}) => {
     else if (isAcademicTitlesSuccess && isAcademicTitlesUsersSuccess){
         return(
             <React.Fragment>
-                <div>Академические титулы</div>
+                <div>Ученые титулы</div>
                 <SimpleManyToUsers
                     objects={proffInterests}
                     joinObjects={proffInterestsUsers}

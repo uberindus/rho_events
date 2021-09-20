@@ -49,6 +49,7 @@ COPY ./entrypoint.prod.sh $APP_HOME
 COPY ./django_app $APP_HOME
 
 RUN mkdir static
+RUN mkdir media
 RUN mkdir logs
 
 RUN chown -R app:app $APP_HOME

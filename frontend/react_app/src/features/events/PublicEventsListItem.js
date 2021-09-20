@@ -7,8 +7,8 @@ export const PublicEventsListItem = ({event}) => {
         <div className="events-list-item">
             <h5><Link to={`/public-events/${event.id}`}>{event.title}</Link></h5>
             <div className="events-list-item-dates">
-                    <span>Дата начала: {dateToDMY(Date(event.date_begin))}</span>
-                    <span>Дата конца: {dateToDMY(Date(event.date_end))}</span>
+                <span>Дата начала: {dateToDMY(event.date_begin)}</span>
+                <span>Дата конца: {dateToDMY(event.date_end)}</span>
             </div>
             <div className="events-list-item-brief_description">{event.brief_description}</div>
         </div>

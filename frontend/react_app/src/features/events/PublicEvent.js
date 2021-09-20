@@ -19,9 +19,25 @@ export const PublicEvent = ({eventId}) => {
           <span>-</span>
           <span>{dateToDMY(Date(event.date_end))}</span>
         </div>
+        <span><b>Короткое описание</b></span>
+        <div className="public-event-brief-description">
+          {event.brief_description}
+        </div>
+        
+        <span><b>Полное описание</b></span>
         <div className="public-event-full-description">
           {event.full_description}
         </div>
+        {
+          event.site ?
+          <div className="public-event-place">
+            <span><b>Сайт мероприятия - </b></span>
+            <span></span>
+            <a href={event.site}>{event.site}</a>
+          </div>
+          :
+          null
+        }
         <div className="public-event-place">
           <span><b>Место проведения</b> -</span>
           <span> </span>

@@ -298,6 +298,11 @@ body {
 .public-event-full-description {
   white-space: pre-wrap;
 }
+
+.public-event-brief-description {
+  white-space: pre-wrap;
+  margin-bottom: 15px;
+}
 .public-event {
   padding-bottom: 150px;
 }

@@ -17,12 +17,16 @@ from django.core.validators import RegexValidator
 #  STATUS
 #####################################################################################################################
 
+
 class StatusChangedRecord(models.Model):
-    previous_status = models.CharField(max_length=15, choices=StatusCode.CHOICES, default=StatusCode.REJECTED)
-    current_status = models.CharField(max_length=15, choices=StatusCode.CHOICES, default=StatusCode.REJECTED)
+    previous_status = models.CharField(
+        max_length=15, choices=StatusCode.CHOICES, default=StatusCode.REJECTED)
+    current_status = models.CharField(
+        max_length=15, choices=StatusCode.CHOICES, default=StatusCode.REJECTED)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    causer = models.ForeignKey("User", null=True, on_delete=models.SET_NULL, related_name="status_changes_records")
+    causer = models.ForeignKey(
+        "User", null=True, on_delete=models.SET_NULL, related_name="status_changes_records")
     comment = models.CharField(max_length=255, blank=True)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -40,11 +44,12 @@ class Organization(models.Model):
     def __str__(self) -> str:
         return self.title
 
+
 class EventManager(models.Manager):
 
     def filter_by_organizer(self, user):
         return self.filter(participations__user=user, participations__role=EventRole.ORGANIZER)
-    
+
     def filter_by_reporter(self, user):
         return self.filter(participations__user=user, participations__role=EventRole.REPORTER)
 
@@ -54,42 +59,53 @@ class Event(models.Model):
     objects = EventManager()
 
     title = models.CharField(max_length=255, blank=True)
-    
+
     date_begin = models.DateField()
     date_end = models.DateField()
     place = models.CharField(max_length=127, blank=True)
 
     brief_description = models.CharField(max_length=1023, blank=True)
     full_description = models.CharField(max_length=15000, blank=True)
-    
+
     site = models.URLField(max_length=127, blank=True)
-    
-    status = models.CharField(max_length=15, choices=StatusCode.CHOICES, default=StatusCode.PROCESS)
-    
+
+    status = models.CharField(
+        max_length=15, choices=StatusCode.CHOICES, default=StatusCode.PROCESS)
+
     is_over = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-date_begin']
 
 
 class EventOrganization(models.Model):
-    role = models.CharField(max_length=15, choices=EventOrganizationRole.CHOICES, default=EventOrganizationRole.MAIN_ORGANIZER)
+    role = models.CharField(max_length=15, choices=EventOrganizationRole.CHOICES,
+                            default=EventOrganizationRole.MAIN_ORGANIZER)
     role_description = models.CharField(max_length=127, blank=True)
-    event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL, related_name="event_organizations")
-    organization = models.ForeignKey(Organization, null=True, on_delete=models.SET_NULL, related_name="event_organizations")
+    event = models.ForeignKey(
+        Event, null=True, on_delete=models.SET_NULL, related_name="event_organizations")
+    organization = models.ForeignKey(
+        Organization, null=True, on_delete=models.SET_NULL, related_name="event_organizations")
 
 
 class Affiliation(models.Model):
     position = models.CharField(max_length=127, blank=True)
-    organization = models.ForeignKey(Organization, null=True, on_delete=models.SET_NULL, related_name="affiliations")
-    user = models.ForeignKey("User", null=True, on_delete=models.SET_NULL, related_name="affiliations")
+    organization = models.ForeignKey(
+        Organization, null=True, on_delete=models.SET_NULL, related_name="affiliations")
+    user = models.ForeignKey(
+        "User", null=True, on_delete=models.SET_NULL, related_name="affiliations")
     is_main_affiliation = models.BooleanField()
 
 #####################################################################################################################
 #  GROUP PROXY
 #####################################################################################################################
 
+
 class GroupManager(DjangoGroupManager):
-    
+
     def get_moderators(self):
         return self.get(name=MODERATORS_GROUP)
+
 
 class Group(DjangoGroup):
 
@@ -102,11 +118,13 @@ class Group(DjangoGroup):
 #  USER
 #####################################################################################################################
 
+
 class ProffInterest(models.Model):
     title = models.CharField(max_length=127, blank=True)
 
     def __str__(self) -> str:
         return self.title
+
 
 class ProffInterestUser(models.Model):
     proff_interest = models.ForeignKey(
@@ -122,6 +140,7 @@ class ProffInterestUser(models.Model):
         null=True
     )
 
+
 class RegionalBranch(models.Model):
     title = models.CharField(max_length=63, blank=True, unique=True)
     chairman = models.CharField(max_length=127, blank=True)
@@ -131,13 +150,14 @@ class RegionalBranch(models.Model):
     def __str__(self) -> str:
         return self.title
 
+
 class AcademicTitle(models.Model):
     title = models.CharField(max_length=63, blank=True, unique=True)
 
     def __str__(self) -> str:
         return self.title
 
-        
+
 class AcademicTitleUser(models.Model):
     academic_title = models.ForeignKey(
         AcademicTitle,
@@ -158,6 +178,7 @@ class UserManager(BaseUserManager):
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
     """
+
     def create_user(self, email, password, **extra_fields):
         """`
         Create and save a User with the given email and password.
@@ -188,8 +209,10 @@ class UserManager(BaseUserManager):
 def avatar_photo_path(avatar, filename):
     return f"users/{avatar.user.pk}/{filename}"
 
+
 class Avatar(models.Model):
-    photo = models.ImageField(blank=True, null=True, upload_to=avatar_photo_path)
+    photo = models.ImageField(blank=True, null=True,
+                              upload_to=avatar_photo_path)
 
 
 class User(AbstractUser):
@@ -199,12 +222,12 @@ class User(AbstractUser):
             return Affiliation.objects.get(user=self, is_main_affiliation=True)
         except ObjectDoesNotExist:
             return None
-    
+
     @property
     def is_moderator(self):
         moderators_group = Group.objects.get_moderators()
-        return self.groups.filter(pk=moderators_group.pk).exists()  
-    
+        return self.groups.filter(pk=moderators_group.pk).exists()
+
     def is_event_organizer(self, event):
         return EventParticipation.objects.filter(user=self, event=event, role=EventParticipation.Role.ORGANIZER).exists()
 
@@ -215,34 +238,36 @@ class User(AbstractUser):
 
     username = None
     email = models.EmailField('email address', unique=True)
-    
-    status = models.CharField(max_length=15, choices=StatusCode.CHOICES, default=StatusCode.REJECTED)
-    
+
+    status = models.CharField(
+        max_length=15, choices=StatusCode.CHOICES, default=StatusCode.REJECTED)
+
     # additional fields of User
 
     patronymic = models.CharField(max_length=127, blank=True)
     birthday = models.DateField(blank=True, null=True)
     phone_number = models.CharField(max_length=14, blank=True, null=True)
 
-    avatar = models.OneToOneField(Avatar, on_delete=models.SET_NULL, null=True, related_name="user")
+    avatar = models.OneToOneField(
+        Avatar, on_delete=models.SET_NULL, null=True, related_name="user")
 
     # education
 
     AcademicRank = AcademicRank
-    
+
     academic_rank = models.CharField(
         max_length=31,
         choices=AcademicRank.CHOICES,
         default=AcademicRank.NOTHING,
-        )
-     
+    )
+
     regional_branch = models.ForeignKey(
         RegionalBranch,
         on_delete=models.SET_NULL,
         related_name="users",
         null=True
     )
-        
+
     def __str__(self):
         return self.email
 
@@ -250,17 +275,21 @@ class User(AbstractUser):
 #  EVENT_PARTICIPATION
 #####################################################################################################################
 
+
 class EventParticipation(models.Model):
-    
+
     Role = EventRole
 
-    role = models.CharField(max_length=15, choices=Role.CHOICES, default=Role.REPORTER)
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="events_participation")
-    event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL, related_name="participations")
+    role = models.CharField(
+        max_length=15, choices=Role.CHOICES, default=Role.REPORTER)
+    user = models.ForeignKey(
+        User, null=True, on_delete=models.SET_NULL, related_name="events_participation")
+    event = models.ForeignKey(
+        Event, null=True, on_delete=models.SET_NULL, related_name="participations")
 
 
 # class Form(models.Model):
-    
+
 #     # user data
 #     fullname = models.CharField(max_length=127, blank=True)
 #     email = models.EmailField('email address')
@@ -268,9 +297,6 @@ class EventParticipation(models.Model):
 #     affiliation = models.CharField(max_length=255, blank=True)
 
 #     report_theme = models.CharField(max_length=255, blank=True)
-    
+
 #     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="users")
 #     event = models.ForeignKey(Event, null=True, on_delete=models.SET_NULL, related_name="events")
-    
-
-

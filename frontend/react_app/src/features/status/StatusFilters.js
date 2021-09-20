@@ -2,7 +2,10 @@ import {useState} from 'react'
 
 const StatusFilter = ({statusFilter, setStatusFilter, text, value}) => 
     <a
-        style={{"text-decoration": (value === statusFilter ? "underline" : "none")}}
+        style={{
+            "text-decoration": (value === statusFilter ? "underline" : "none"),
+            "color": "#0d6efd",
+        }}
         onClick={() => setStatusFilter(value)}
     >
         {text}

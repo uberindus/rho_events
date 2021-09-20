@@ -36,10 +36,10 @@ export const AddEvent = ({user}) => {
     }),
     place: yup.string(),
     brief_description: yup.string()
-      .required("Региональный отделение обязателено")
+      .required("Короткое описание обязателено")
       .max(300, "Описание должно иметь меньше 300 букв"),
     full_description: yup.string()
-      .required("Академическое звание обязателено")
+      .required("Полное описание обязателено")
       .max(8000, "Описание должно иметь меньше 8000 букв"),
     site: yup.string().url()
   });
