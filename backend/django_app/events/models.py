@@ -75,7 +75,7 @@ class Event(models.Model):
     is_over = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-date_begin']
+        ordering = ['date_begin']
 
 
 class EventOrganization(models.Model):
