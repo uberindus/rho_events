@@ -2,6 +2,7 @@ version: "3.7"
 
 services:
   backend:
+    user: "app:app"
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
