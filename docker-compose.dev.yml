@@ -28,7 +28,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.dev
     volumes:
-      - react_static_volume/:/app/build
+      - react_static_volume:/app/build
   nginx:
     restart: always
     build:
