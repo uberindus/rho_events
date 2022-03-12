@@ -42,7 +42,6 @@ services:
       - 80:80
     depends_on:
       - backend
-    command: 'service nginx start'
 
 volumes:
   postgres_data:
