@@ -5,7 +5,7 @@ services:
     user: "app:app"
     build:
       context: ./backend
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     command: gunicorn django_app.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - django_static_volume:/home/app/web/static
@@ -14,7 +14,7 @@ services:
     expose:
       - 8000
     env_file:
-      - ./.env.prod
+      - ./.env.dev
     depends_on:
       - db
   db:
@@ -22,28 +22,27 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ./.env.prod.db
+      - ./.env.dev.db
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     volumes:
       - react_static_volume/:/app/build
   nginx:
     restart: always
     build:
       context: ./nginx
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     volumes:
       - django_static_volume:/usr/share/nginx/django_files/static
       - media:/usr/share/nginx/media
       - react_static_volume:/usr/share/nginx/react
     ports:
       - 80:80
-      - 443:443
     depends_on:
       - backend
-    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+    command: 'service nginx start'
 
 volumes:
   postgres_data:

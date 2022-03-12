@@ -1,9 +1,10 @@
-FROM node:16-alpine3.12
+FROM node:16-alpine3.12 as builder
 
 WORKDIR /app
 
 COPY ["./react_app/package.json", "./react_app/package-lock.json*", "./"]
-
-RUN npm install
+RUN npm install --silent
 
 COPY ./react_app .
+
+RUN npm run build
